@@ -29,6 +29,7 @@ const About: React.FC = () => {
               <li>Instant accuracy and WPM feedback</li>
               <li>Progress history saved on your device</li>
               <li>Clean, distraction-free test interface</li>
+              <li>Use Desktop for better experience</li>
             </ul>
           </div>
 
