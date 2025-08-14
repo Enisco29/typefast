@@ -1,6 +1,6 @@
 # TypeFast
 
-A modern typing practice app with AI‑generated passages, configurable difficulty and modes, real‑time feedback, and local history — built with React, TypeScript, Vite, and TailwindCSS.
+A modern open source typing practice app with AI‑generated passages, configurable difficulty and modes, real‑time feedback, and local history — built with React, TypeScript, Vite, and TailwindCSS.
 
 ## Features
 
