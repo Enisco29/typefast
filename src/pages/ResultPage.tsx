@@ -42,9 +42,9 @@ const ResultPage = () => {
   };
 
   return (
-    <div className="w-full h-[41vw] flex flex-col justify-center items-center">
-      <div className="w-[50%]">
-        <h1 className="text-[50px] font-medium text-center">Test Results</h1>
+    <div className="w-full h-[41vw] max-sm:h-screen flex flex-col justify-center items-center max-sm:p-3">
+      <div className="w-[50%] max-sm:w-full">
+        <h1 className="text-[50px] font-medium text-center max-sm:mt-10 max-sm:text-2xl">Test Results</h1>
 
         {!latest ? (
           <div className="mt-8 p-6 rounded-lg bg-gray-50 border border-gray-200 text-center text-gray-600">
@@ -94,7 +94,7 @@ const ResultPage = () => {
               </div>
             </div>
 
-            <div className="flex w-full justify-center gap-6 mt-6">
+            <div className="flex w-full justify-center gap-6 mt-6 p-3">
               <button
                 onClick={() => navigate("/configure")}
                 className="p-4 rounded-md px-10 cursor-pointer bg-blue-600 text-white font-medium"
