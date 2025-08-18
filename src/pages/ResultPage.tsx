@@ -42,7 +42,7 @@ const ResultPage = () => {
   };
 
   return (
-    <div className="w-full h-[41vw] max-sm:h-screen flex flex-col justify-center items-center max-sm:p-3">
+    <div className="w-full max-sm:h-screen flex flex-col justify-center items-center max-sm:p-3">
       <div className="w-[50%] max-sm:w-full">
         <h1 className="text-[50px] font-medium text-center max-sm:mt-10 max-sm:text-2xl">Test Results</h1>
 
@@ -60,7 +60,7 @@ const ResultPage = () => {
           </div>
         ) : (
           <>
-            <div className="flex py-5 gap-7 ">
+            <div className="flex py-5 gap-7">
               <div className="p-5 px-4 space-y-5 bg-gray-100 w-[400px] rounded-lg">
                 <h3 className="text-xl">Words Per Minute</h3>
                 <p className="text-2xl font-bold">{latest.wpm}</p>
