@@ -7,6 +7,7 @@ import ConfigurePage from "./pages/ConfigurePage";
 import About from "./pages/About";
 import Navbar from "./components/Navbar";
 import type { PropsWithChildren } from "react";
+import Login from "./pages/auth/Login";
 
 // Guard: Only allow entering Test when coming from Configure with state
 const RequireConfig = ({ children }: PropsWithChildren) => {
@@ -33,6 +34,7 @@ const AppContent = () => {
         <Route path="/result" element={<ResultPage /> }/>
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/auth" element={<Login />} />
       </Routes>
     </>
   );

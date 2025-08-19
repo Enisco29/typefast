@@ -15,6 +15,7 @@ const Navbar = () => {
 			<Link to="/configure" onClick={closeMenu}>Practice</Link>
 			<Link to="/history" onClick={closeMenu}>History</Link>
 			<Link to="/about" onClick={closeMenu}>About</Link>
+			<Link to="/auth" onClick={closeMenu}>Login</Link>
 		</div>
 	)
 
