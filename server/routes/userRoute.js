@@ -12,6 +12,7 @@ userRouter.get("/is-auth", authUser, (req, res) => {
     user: {
       email: req.user.email,
       name: req.user.name,
+      userId: req.user.userId,
     },
   });
 });

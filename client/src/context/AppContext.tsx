@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 
 interface User {
-  id: string;
+  userId: string;
   name: string;
   email: string;
 }
@@ -56,6 +56,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         });
         if (data.success && data.user) {
           setUser(data.user);
+          setToken(token);
+          axios.defaults.headers.common["Authorization"] = token;
         }
       } catch (error: any) {
         console.error("Auth error", error.message);

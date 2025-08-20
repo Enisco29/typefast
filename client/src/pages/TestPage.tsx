@@ -2,10 +2,12 @@ import { ArrowLeft } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { generateTypingText, type Difficulty, type Mode } from "../services/ai";
+import { useAppContext } from "../context/AppContext";
 
 const STORAGE_KEY = "typing_history";
 
 const TestPage = () => {
+  const { axios, user } = useAppContext();
   const location = useLocation() as {
     state?: { difficulty?: Difficulty; mode?: Mode };
   };
@@ -122,6 +124,7 @@ const TestPage = () => {
       mode,
     };
 
+    // Persist locally for guests
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       const list = raw ? JSON.parse(raw) : [];
@@ -130,6 +133,25 @@ const TestPage = () => {
     } catch {
       // ignore storage errors
     }
+
+    // If authenticated, also persist to backend
+    (async () => {
+      try {
+        if (!user) return;
+        await axios.post(
+          "/api/history/add",
+          {
+            wpm: entry.wpm,
+            accuracy: entry.accuracy,
+            durationSeconds: entry.durationSeconds,
+            charactersTyped: entry.charactersTyped,
+            textLength: entry.textLength,
+          }
+        );
+      } catch (e) {
+        // silently ignore for now
+      }
+    })();
 
     navigate("/result");
   }, [completed]);

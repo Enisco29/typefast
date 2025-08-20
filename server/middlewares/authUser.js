@@ -21,6 +21,7 @@ export const authUser = (req, res, next) => {
     req.user = {
       userId: decoded.userId,
       email: decoded.email,
+      name: decoded.name,
     };
 
     next();

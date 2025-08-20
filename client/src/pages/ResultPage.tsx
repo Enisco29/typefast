@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 
 type ResultEntry = {
-  id: string;
+  id?: string;
   dateISO: string;
   wpm: number;
   accuracy: number;
@@ -17,6 +18,7 @@ const STORAGE_KEY = "typing_history";
 
 const ResultPage = () => {
   const navigate = useNavigate();
+  const { user } = useAppContext();
   const [latest, setLatest] = useState<ResultEntry | null>(null);
 
   useEffect(() => {
