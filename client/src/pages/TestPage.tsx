@@ -112,6 +112,25 @@ const TestPage = () => {
       return Math.round(words / timeElapsedMin);
     })();
 
+   const score = (wpm: number, accuracy: number, durationSeconds: number) => {
+      // Example formula: weight WPM & Accuracy
+      const baseScore = wpm * 0.7 + accuracy * 0.3;
+
+      // Normalize against duration (optional)
+      const durationFactor = Math.max(0.5, Math.min(1, 120 / durationSeconds));
+      // if duration > 120s, factor drops a bit
+
+      let s = baseScore * durationFactor;
+
+      // Cap the score to max 200
+      if (s > 200) s = 200;
+
+      // Round neatly
+      return Math.round(s);
+    };
+
+    const finalScore = score(wpm, accuracy, customTime - timeLeft);
+
     const entry = {
       id: `${Date.now()}`,
       dateISO: new Date().toISOString(),
@@ -121,6 +140,7 @@ const TestPage = () => {
       charactersTyped,
       textLength: targetText.length,
       difficulty,
+      score: finalScore,
       mode,
     };
 
@@ -146,6 +166,7 @@ const TestPage = () => {
             durationSeconds: entry.durationSeconds,
             charactersTyped: entry.charactersTyped,
             textLength: entry.textLength,
+            score: entry.score,
           }
         );
       } catch (e) {

@@ -27,12 +27,16 @@ const HistorySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  score: {
+    type: Number,
+    required: true,
+  },
   dateISO: {
     type: Date,
     default: Date.now,
   },
 });
 
-const  History =  mongoose.model("History", HistorySchema);
+const History = mongoose.model("History", HistorySchema);
 
-export default History
+export default History;

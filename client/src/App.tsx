@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import type { PropsWithChildren } from "react";
 import Login from "./pages/auth/Login";
 import { Toaster } from "react-hot-toast";
+import LeaderboardPage from "./pages/LeaderboardPage";
 
 // Guard: Only allow entering Test when coming from Configure with state
 const RequireConfig = ({ children }: PropsWithChildren) => {
@@ -43,6 +44,7 @@ const AppContent = () => {
         />}
         {token && <Route path="/result" element={<ResultPage />} />}
         {token && <Route path="/history" element={<HistoryPage />} />}
+        {token && <Route path="/leaderboard" element={<LeaderboardPage />} />}
         <Route path="/about" element={<About />} />
         <Route path="/auth" element={<Login />} />
       </Routes>

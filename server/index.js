@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoute.js";
 import historyRouter from "./routes/historyRoute.js";
+import leaderboardRouter from "./routes/leaderboardRoute.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("API is running..."));
 app.use("/api/users", userRouter)
 app.use("/api/history", historyRouter);
+app.use("/api/leaderboard", leaderboardRouter);
 
 const port = process.env.PORT || 3000;
 

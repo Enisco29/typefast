@@ -27,6 +27,7 @@ const Navbar = () => {
           <Link to="/about" onClick={closeMenu}>
             About
           </Link>
+          <Link to='/leaderboard' onClick={closeMenu}>Leaderboard</Link>
           <button
             onClick={() => {
               logout();

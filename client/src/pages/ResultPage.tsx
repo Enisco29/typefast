@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/AppContext";
 
 type ResultEntry = {
   id?: string;
@@ -10,6 +9,7 @@ type ResultEntry = {
   durationSeconds: number;
   charactersTyped: number;
   textLength: number;
+  score: number;
   difficulty?: string;
   mode?: string;
 };
@@ -18,7 +18,6 @@ const STORAGE_KEY = "typing_history";
 
 const ResultPage = () => {
   const navigate = useNavigate();
-  const { user } = useAppContext();
   const [latest, setLatest] = useState<ResultEntry | null>(null);
 
   useEffect(() => {
@@ -36,6 +35,8 @@ const ResultPage = () => {
       setLatest(null);
     }
   }, []);
+
+
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60);
@@ -93,6 +94,10 @@ const ResultPage = () => {
               <div className="p-5 rounded-lg bg-gray-50">
                 <p className="text-gray-500 text-sm">Mode</p>
                 <p className="text-lg font-semibold">{latest.mode || "—"}</p>
+              </div>
+               <div className="p-5 rounded-lg bg-gray-50">
+                <p className="text-gray-500 text-sm">Your Score</p>
+                <p className="text-lg font-semibold">{latest.score || "—"}</p>
               </div>
             </div>
 

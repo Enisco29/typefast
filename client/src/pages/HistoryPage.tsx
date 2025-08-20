@@ -9,6 +9,7 @@ interface HistoryEntry {
   accuracy: number;
   durationSeconds: number;
   charactersTyped: number;
+  score: number;
   textLength: number;
 }
 
@@ -31,6 +32,7 @@ const HistoryPage: React.FC = () => {
             accuracy: d.accuracy,
             durationSeconds: d.durationSeconds,
             charactersTyped: d.charactersTyped,
+            score: d.score,
             textLength: d.textLength,
           }))
           normalized.sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime())
@@ -128,7 +130,7 @@ const HistoryPage: React.FC = () => {
                     <p className="text-2xl font-bold">{h.accuracy}%</p>
                   </div>
                 </div>
-                <div className="grid grid-cols-3 gap-3 mt-4">
+                <div className="grid grid-cols-4 gap-3 mt-4">
                   <div className="p-3 rounded-md bg-gray-50 text-center">
                     <p className="text-xs text-gray-500">Duration</p>
                     <p className="font-semibold">{formatTime(h.durationSeconds)}</p>
@@ -138,7 +140,11 @@ const HistoryPage: React.FC = () => {
                     <p className="font-semibold">{h.charactersTyped}</p>
                   </div>
                   <div className="p-3 rounded-md bg-gray-50 text-center">
-                    <p className="text-xs text-gray-500">Target</p>
+                    <p className="text-xs text-gray-500">Score</p>
+                    <p className="font-semibold">{h.score || "-"}</p>
+                  </div>
+                  <div className="p-3 rounded-md bg-gray-50 text-center">
+                    <p className="text-xs text-gray-500">Target Character</p>
                     <p className="font-semibold">{h.textLength}</p>
                   </div>
                 </div>

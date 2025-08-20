@@ -1,10 +1,13 @@
 import History from "../models/historyModel.js";
+import { calculateScore } from "../utils/score.js";
 
 //save new history entry
 export const addHistory = async (req, res) => {
   try {
     const { wpm, accuracy, durationSeconds, charactersTyped, textLength } =
       req.body;
+
+      const score = calculateScore(wpm, accuracy, durationSeconds)
 
     const entry = new History({
       userId: req.user.userId, // from JWT
@@ -13,6 +16,7 @@ export const addHistory = async (req, res) => {
       durationSeconds,
       charactersTyped,
       textLength,
+      score
     });
     await entry.save();
     res.status(201).json(entry);
