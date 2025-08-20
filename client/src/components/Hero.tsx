@@ -3,6 +3,7 @@ import HeroImage from "../assets/hero_image.png";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   return (
     <section className="relative overflow-hidden bg-white">
       {/* subtle decorative shapes */}
@@ -16,24 +17,29 @@ const Hero = () => {
               Master your typing.
             </h1>
             <p className="mt-5 text-slate-600 text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0">
-              Practice with AI‑generated passages tailored to your level. Improve accuracy and speed with a clean, distraction‑free experience.
+              Practice with AI‑generated passages tailored to your level.
+              Improve accuracy and speed with a clean, distraction‑free
+              experience.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
                 className="px-7 py-3 rounded-lg bg-sky-600 text-white font-semibold shadow hover:bg-sky-700 transition"
-                onClick={() => navigate("/configure")}
+                onClick={() => navigate(token ? "/configure" : "/auth")}
               >
-                Start Test
+                Get Started
               </button>
-              <button
-                className="px-7 py-3 rounded-lg bg-white text-sky-700 font-semibold border border-sky-200 hover:border-sky-300 hover:shadow-sm transition"
-                onClick={() => navigate("/history")}
-              >
-                View History
-              </button>
+              {token && (
+                <button
+                  className="px-7 py-3 rounded-lg bg-white text-sky-700 font-semibold border border-sky-200 hover:border-sky-300 hover:shadow-sm transition"
+                  onClick={() => navigate("/history")}
+                >
+                  View History
+                </button>
+              )}
             </div>
             <div className="mt-6 text-slate-500 text-sm">
-              Customize difficulty, mode, and timer. Backspace and paste are disabled for fair results.
+              Customize difficulty, mode, and timer. Backspace and paste are
+              disabled for fair results.
             </div>
           </div>
 
@@ -45,7 +51,8 @@ const Hero = () => {
                 className="w-full max-w-[560px] h-auto drop-shadow-xl rounded-xl ring-1 ring-slate-200"
               />
               <div className="absolute -bottom-4 -left-4 bg-white/95 text-slate-700 text-sm px-4 py-2 rounded-lg shadow hidden sm:flex items-center gap-2 ring-1 ring-slate-200">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" /> Live accuracy preview
+                <span className="h-2 w-2 rounded-full bg-emerald-500" /> Live
+                accuracy preview
               </div>
             </div>
           </div>

@@ -8,10 +8,13 @@ import About from "./pages/About";
 import Navbar from "./components/Navbar";
 import type { PropsWithChildren } from "react";
 import Login from "./pages/auth/Login";
+import { Toaster } from "react-hot-toast";
 
 // Guard: Only allow entering Test when coming from Configure with state
 const RequireConfig = ({ children }: PropsWithChildren) => {
-  const location = useLocation() as { state?: { difficulty?: string; mode?: string } };
+  const location = useLocation() as {
+    state?: { difficulty?: string; mode?: string };
+  };
   const hasConfig = Boolean(location.state?.difficulty && location.state?.mode);
   if (!hasConfig) {
     return <Navigate to="/configure" replace />;
@@ -19,20 +22,27 @@ const RequireConfig = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
 
-
-
 const AppContent = () => {
   const location = useLocation();
-  const showNavber = location.pathname !== "/test";
+  const token = localStorage.getItem("token");
+  const showNavbar = location.pathname !== "/test";
   return (
     <>
-     {showNavber && <Navbar />}
+      {showNavbar && <Navbar />}
+      <Toaster />
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="/configure" element={<ConfigurePage />} />
-        <Route path="/test" element={<RequireConfig><TestPage /></RequireConfig>} />
-        <Route path="/result" element={<ResultPage /> }/>
-        <Route path="/history" element={<HistoryPage />} />
+        {token && <Route path="/configure" element={<ConfigurePage />} />}
+       {token && <Route
+          path="/test"
+          element={
+            <RequireConfig>
+              <TestPage />
+            </RequireConfig>
+          }
+        />}
+        {token && <Route path="/result" element={<ResultPage />} />}
+        {token && <Route path="/history" element={<HistoryPage />} />}
         <Route path="/about" element={<About />} />
         <Route path="/auth" element={<Login />} />
       </Routes>
@@ -41,7 +51,7 @@ const AppContent = () => {
 };
 
 const App = () => {
-  return <AppContent/>
-}
+  return <AppContent />;
+};
 
 export default App;
