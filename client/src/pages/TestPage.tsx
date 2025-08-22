@@ -287,7 +287,7 @@ const TestPage = () => {
     <div className="w-full flex justify-center items-start min-h-[70vh] px-4 py-8 sm:py-12">
       <div
         className="rounded-full fixed bg-gray-200 left-3 top-3 sm:left-5 sm:top-4 max-sm:top-7 p-2 sm:p-3 cursor-pointer hover:bg-gray-300"
-        onClick={() => navigate("/configure")}
+        onClick={() => navigate("/dashboard/configure")}
       >
         <ArrowLeft />
       </div>

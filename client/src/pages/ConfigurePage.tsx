@@ -51,11 +51,11 @@ const ConfigurePage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full flex flex-col items-center justify-center min-h-screen px-4">
-      <h2 className="mb-8 text-3xl sm:text-4xl font-bold text-gray-800 text-center">
+    <div className="w-full flex flex-col items-center mt-20 px-4">
+      <h2 className="mb-8 text-2xl sm:text-4xl font-bold text-gray-800 text-center">
         Configure your Test
       </h2>
-      <div className="relative w-full max-w-xl sm:max-w-2xl">
+      <div className="relative max-w-md w-full ">
         <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
           <CustomSelect
             label="Select Difficulty"

@@ -15,23 +15,22 @@ const Navbar = () => {
     <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 text-lg md:text-xl font-semibold">
       {token ? (
         <>
-          <Link to="/configure" onClick={closeMenu}>
-            Practice
-          </Link>
-          <Link to="/history" onClick={closeMenu}>
-            History
+          <Link to="/dashboard" onClick={closeMenu}>
+            Dashboard
           </Link>
           <Link to="/about" onClick={closeMenu}>
             About
           </Link>
-          <Link to='/leaderboard' onClick={closeMenu}>Leaderboard</Link>
+
           <button
             onClick={() => {
               logout();
               closeMenu();
             }}
             className="text-red-600 hover:text-red-800"
-          >logout</button>
+          >
+            logout
+          </button>
         </>
       ) : (
         <Link to="/auth" onClick={closeMenu}>

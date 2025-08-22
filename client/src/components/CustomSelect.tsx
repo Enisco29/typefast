@@ -33,7 +33,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
       <div
         onClick={onToggle}
-        className="flex justify-between items-center w-full bg-white border border-gray-300 rounded-xl px-8 py-8
+        className="flex justify-between w-full items-center bg-white border border-gray-300 rounded-xl px-4 py-5
          cursor-pointer shadow-sm hover:shadow-md focus:ring-2 focus:ring-indigo-400 transition-all duration-200"
       >
         <span className="text-xl">{selectedOption?.label || selected}</span>
