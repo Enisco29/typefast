@@ -7,7 +7,7 @@ export const addHistory = async (req, res) => {
     const { wpm, accuracy, durationSeconds, charactersTyped, textLength } =
       req.body;
 
-      const score = calculateScore(wpm, accuracy, durationSeconds)
+    const score = calculateScore(wpm, accuracy, durationSeconds);
 
     const entry = new History({
       userId: req.user.userId, // from JWT
@@ -16,7 +16,7 @@ export const addHistory = async (req, res) => {
       durationSeconds,
       charactersTyped,
       textLength,
-      score
+      score,
     });
     await entry.save();
     res.status(201).json(entry);

@@ -15,9 +15,6 @@ const Navbar = () => {
     <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10 text-lg md:text-xl font-semibold">
       {token ? (
         <>
-          <Link to="/" onClick={closeMenu}>
-            Home
-          </Link>
           <Link to="/configure" onClick={closeMenu}>
             Practice
           </Link>

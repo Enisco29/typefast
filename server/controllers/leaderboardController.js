@@ -19,6 +19,7 @@ export const getLeaderboard = async (req, res) => {
       leaderboard.map(async (entry, idx) => {
         const user = await UserModel.findById(entry._id).select("name email");
         return {
+          id: entry._id,
           rank: idx + 1,
           user: user?.name || "Anonymous",
           totalScore: entry.totalScore,

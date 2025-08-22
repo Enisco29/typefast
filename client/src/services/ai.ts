@@ -66,7 +66,7 @@ export async function generateTypingText({ difficulty, mode, maxChars = 450 }: G
     return text.trim().slice(0, maxChars)
   } catch {
     return FALLBACK[difficulty][mode]
-  }
+  }maxChars
 }
 
 function buildPrompt(difficulty: Difficulty, mode: Mode, maxChars: number): string {
