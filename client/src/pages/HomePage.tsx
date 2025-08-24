@@ -100,7 +100,7 @@ const HomePage = () => {
 
           <div className="mt-10 flex justify-center">
             <button
-              onClick={() => navigate(token ? "/configure" : "/auth")}
+              onClick={() => navigate(token ? "/dashboard/configure" : "/auth")}
               className="px-8 py-3 rounded-lg bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 transition"
             >
               Get Started

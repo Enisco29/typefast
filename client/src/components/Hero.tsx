@@ -24,14 +24,14 @@ const Hero = () => {
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
                 className="px-7 py-3 rounded-lg bg-sky-600 text-white font-semibold shadow hover:bg-sky-700 transition"
-                onClick={() => navigate(token ? "/configure" : "/auth")}
+                onClick={() => navigate(token ? "/dashboard/configure" : "/auth")}
               >
                 Get Started
               </button>
               {token && (
                 <button
                   className="px-7 py-3 rounded-lg bg-white text-sky-700 font-semibold border border-sky-200 hover:border-sky-300 hover:shadow-sm transition"
-                  onClick={() => navigate("/history")}
+                  onClick={() => navigate("/dashboard/history")}
                 >
                   View History
                 </button>

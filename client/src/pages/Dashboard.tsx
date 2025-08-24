@@ -1,5 +1,9 @@
+import StreakDisplay from "../components/Streak";
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return <div>
+    <StreakDisplay/>
+  </div>;
 };
 
 export default Dashboard;

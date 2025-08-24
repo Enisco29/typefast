@@ -22,6 +22,12 @@ export const authUser = (req, res, next) => {
       userId: decoded.userId,
       email: decoded.email,
       name: decoded.name,
+      currentStreak: decoded.currentStreak,
+      maxStreak: decoded.maxStreak,
+      totalTests: decoded.totalTests,
+      weeklyStreak: decoded.weeklyStreak,
+      totalPoints: decoded.totalPoints,
+      currentPeriodPoints: decoded.currentPeriodPoints,
     };
 
     next();

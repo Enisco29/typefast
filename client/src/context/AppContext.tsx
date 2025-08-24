@@ -10,6 +10,13 @@ interface User {
   userId: string;
   name: string;
   email: string;
+  currentStreak: number;
+  maxStreak: number;
+  totalTests: number;
+  weeklyStreak: boolean[];
+  totalPoints: number;
+  currentPeriodPoints: number;
+  daysUntilReset: number;
 }
 
 interface AppContextType {

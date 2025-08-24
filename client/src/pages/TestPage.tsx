@@ -3,11 +3,13 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { generateTypingText, type Difficulty, type Mode } from "../services/ai";
 import { useAppContext } from "../context/AppContext";
+import { formatTime, handleKeyDown } from "../utils/help";
+import { calculateScore } from "../utils/score";
 
 const STORAGE_KEY = "typing_history";
 
 const TestPage = () => {
-  const { axios, user } = useAppContext();
+  const { axios, user, setUser } = useAppContext();
   const location = useLocation() as {
     state?: { difficulty?: Difficulty; mode?: Mode };
   };
@@ -112,24 +114,7 @@ const TestPage = () => {
       return Math.round(words / timeElapsedMin);
     })();
 
-   const score = (wpm: number, accuracy: number, durationSeconds: number) => {
-      // Example formula: weight WPM & Accuracy
-      const baseScore = wpm * 0.7 + accuracy * 0.3;
-
-      // Normalize against duration (optional)
-      const durationFactor = Math.max(0.5, Math.min(1, 120 / durationSeconds));
-      // if duration > 120s, factor drops a bit
-
-      let s = baseScore * durationFactor;
-
-      // Cap the score to max 200
-      if (s > 200) s = 200;
-
-      // Round neatly
-      return Math.round(s);
-    };
-
-    const finalScore = score(wpm, accuracy, customTime - timeLeft);
+    const finalScore = calculateScore(wpm, accuracy, customTime - timeLeft);
 
     const entry = {
       id: `${Date.now()}`,
@@ -142,6 +127,30 @@ const TestPage = () => {
       difficulty,
       score: finalScore,
       mode,
+    };
+
+    const handleFinishTest = async () => {
+      try {
+        const { data } = await axios.post("/api/streak/update");
+        // merge streak data into user in context
+        if (user) {
+          setUser({
+            ...user,
+            currentStreak: data.currentStreak,
+            maxStreak: data.maxStreak,
+            totalTests: data.totalTests,
+            totalPoints: data.totalPoints,
+            currentPeriodPoints: data.currentPeriodPoints,
+            daysUntilReset: data.daysUntilReset,
+          });
+        }
+        console.log("✅ Streak updated:", data);
+      } catch (error: any) {
+        console.error(
+          "❌ Error updating streak:",
+          error.response?.data || error.message
+        );
+      }
     };
 
     // Persist locally for guests
@@ -158,23 +167,20 @@ const TestPage = () => {
     (async () => {
       try {
         if (!user) return;
-        await axios.post(
-          "/api/history/add",
-          {
-            wpm: entry.wpm,
-            accuracy: entry.accuracy,
-            durationSeconds: entry.durationSeconds,
-            charactersTyped: entry.charactersTyped,
-            textLength: entry.textLength,
-            score: entry.score,
-          }
-        );
+        await axios.post("/api/history/add", {
+          wpm: entry.wpm,
+          accuracy: entry.accuracy,
+          durationSeconds: entry.durationSeconds,
+          charactersTyped: entry.charactersTyped,
+          textLength: entry.textLength,
+          score: entry.score,
+        });
       } catch (e) {
         // silently ignore for now
       }
     })();
-
-    navigate("/result");
+    handleFinishTest();
+    navigate("/dashboard/result");
   }, [completed]);
 
   // Handle input changes with backspace prevention
@@ -197,13 +203,6 @@ const TestPage = () => {
     setValue(newValue);
   };
 
-  // Handle keydown events to prevent backspace
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Backspace" || e.key === "Enter") {
-      e.preventDefault();
-    }
-  };
-
   // Start the test
   const startTest = () => {
     if (loadingText || !targetText) return;
@@ -224,13 +223,6 @@ const TestPage = () => {
     setValue("");
     setTimeLeft(customTime);
     setTimerActive(false);
-  };
-
-  // Format time display
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   // Render target text with character-by-character comparison
@@ -339,6 +331,7 @@ const TestPage = () => {
 
         {/*display text to practice */}
         <div className="border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-lg bg-gray-50 w-full max-w-4xl">
+          
           <p
             className="text-2xl sm:text-3xl leading-relaxed select-none"
             style={{ userSelect: "none" }}
@@ -392,9 +385,19 @@ const TestPage = () => {
               <div className="w-full sm:w-auto text-center bg-green-100 text-green-800 px-6 py-3 rounded-lg text-lg font-medium">
                 Accuracy: {calculateAccuracy()}%
               </div>
-              {completed && (
+              {started && (
                 <div className="w-full sm:w-auto text-center bg-blue-100 text-blue-800 px-6 py-3 rounded-lg text-lg font-medium">
                   WPM: {calculateWPM()}
+                </div>
+              )}
+              {started && (
+                <div className="w-full sm:w-auto text-center bg-indigo-100 text-indigo-800 px-6 py-3 rounded-lg text-lg font-medium">
+                  Score: {calculateScore(calculateWPM(), calculateAccuracy(), customTime - timeLeft)} / 200
+                </div>
+              )}
+              {completed && (
+                <div className="w-full sm:w-auto text-center bg-purple-100 text-purple-800 px-6 py-3 rounded-lg text-lg font-medium">
+                  Final WPM: {calculateWPM()}
                 </div>
               )}
             </>

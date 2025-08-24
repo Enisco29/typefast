@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { formatTime } from "../utils/help";
 
 type ResultEntry = {
   id?: string;
@@ -35,18 +36,17 @@ const ResultPage = () => {
       setLatest(null);
     }
   }, []);
-
-
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
+ 
 
   return (
-    <div className="w-full max-sm:h-screen flex flex-col justify-center items-center max-sm:p-3">
-      <div className="w-[50%] max-sm:w-full">
+    <div className="w-full flex flex-col justify-center items-center max-sm:p-3">
+      <div className="max-sm:w-full">
+        {/* Score Breakdown Info */}
+                <div className="mt-4 p-3 bg-blue-100 rounded-lg">
+                  <p className="text-sm text-blue-800 text-center">
+                    <strong>Scoring:</strong> 70% WPM + 30% Accuracy, capped at 200 points
+                  </p>
+                </div>
         <h1 className="text-[50px] font-medium text-center max-sm:mt-10 max-sm:text-2xl">Test Results</h1>
 
         {!latest ? (
@@ -63,14 +63,40 @@ const ResultPage = () => {
           </div>
         ) : (
           <>
-            <div className="flex py-5 gap-7">
-              <div className="p-5 px-4 space-y-5 bg-gray-100 w-[400px] rounded-lg">
+            <div className="grid grid-cols-2 mx-3 py-5 gap-7">
+              <div className="p-5 px-4 space-y-5 bg-gray-100 md:w-[400px] rounded-lg">
                 <h3 className="text-xl">Words Per Minute</h3>
                 <p className="text-2xl font-bold">{latest.wpm}</p>
               </div>
-              <div className="p-5 px-4 space-y-5 bg-gray-100 w-[400px] rounded-lg">
+              <div className="p-5 px-4 space-y-5 bg-gray-100 md:w-[400px] rounded-lg">
                 <h3 className="text-xl">Accuracy</h3>
                 <p className="text-2xl font-bold">{latest.accuracy}%</p>
+              </div>
+            </div>
+
+            {/* Score Display - More Prominent */}
+            <div className="mx-3 py-5">
+              <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                <h3 className="text-2xl font-bold text-center mb-2">Your Score</h3>
+                <div className="text-center">
+                  <span className="text-5xl font-bold text-blue-600">{latest.score || 0}</span>
+                  <span className="text-xl text-gray-600 ml-2">/ 200</span>
+                </div>
+                
+                {/* Progress Bar */}
+                <div className="mt-4 mb-3">
+                  <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div 
+                      className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.min((latest.score || 0) / 200 * 100, 100)}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-center text-sm text-gray-600 mt-1">
+                    {Math.round((latest.score || 0) / 200 * 100)}% of maximum score
+                  </div>
+                </div>
+                
+                
               </div>
             </div>
 
@@ -94,10 +120,6 @@ const ResultPage = () => {
               <div className="p-5 rounded-lg bg-gray-50">
                 <p className="text-gray-500 text-sm">Mode</p>
                 <p className="text-lg font-semibold">{latest.mode || "—"}</p>
-              </div>
-               <div className="p-5 rounded-lg bg-gray-50">
-                <p className="text-gray-500 text-sm">Your Score</p>
-                <p className="text-lg font-semibold">{latest.score || "—"}</p>
               </div>
             </div>
 

@@ -129,8 +129,18 @@ const HistoryPage: React.FC = () => {
                     <p className="text-sm text-gray-500">Accuracy</p>
                     <p className="text-2xl font-bold">{h.accuracy}%</p>
                   </div>
+                  <div className="flex-1 p-4 rounded-md bg-gray-50">
+                    <p className="text-sm">Score</p>
+                    <p className="text-2xl font-bold">
+                      {h.score || 0}
+                      <span className="text-sm ml-1">/ 200</span>
+                    </p>
+                    {h.score >= 200 && (
+                      <p className="text-xs text-green-600 font-semibold">🎉 Max!</p>
+                    )}
+                  </div>
                 </div>
-                <div className="grid grid-cols-4 gap-3 mt-4">
+                <div className="grid grid-cols-3 gap-3 mt-4">
                   <div className="p-3 rounded-md bg-gray-50 text-center">
                     <p className="text-xs text-gray-500">Duration</p>
                     <p className="font-semibold">{formatTime(h.durationSeconds)}</p>
@@ -140,11 +150,7 @@ const HistoryPage: React.FC = () => {
                     <p className="font-semibold">{h.charactersTyped}</p>
                   </div>
                   <div className="p-3 rounded-md bg-gray-50 text-center">
-                    <p className="text-xs text-gray-500">Score</p>
-                    <p className="font-semibold">{h.score || "-"}</p>
-                  </div>
-                  <div className="p-3 rounded-md bg-gray-50 text-center">
-                    <p className="text-xs text-gray-500">Target Character</p>
+                    <p className="text-xs text-gray-500">Target Char</p>
                     <p className="font-semibold">{h.textLength}</p>
                   </div>
                 </div>
