@@ -35,22 +35,44 @@ export const updateStreak = async (req, res) => {
       user.lastLeaderboardReset = today;
     }
 
+    // if (lastDate && lastDate.getTime() === today.getTime()) {
+    //   return res.json({
+    //     message: "Already took a test today: No streak change",
+    //     currentStreak: user.currentStreak,
+    //     maxStreak: user.maxStreak,
+    //     totalPoints: user.totalPoints,
+    //     currentPeriodPoints: user.currentPeriodPoints,
+    //     daysUntilReset: 10 - (daysSinceReset % 10),
+    //   });
+    // } else if (lastDate && lastDate.getTime() === yesterday.getTime()) {
+    //   // Increment streak
+    //   user.currentStreak = (user.currentStreak || 0) + 1;
+    // } else {
+    //   // Missed a day or first test
+    //   user.currentStreak = 1;
+    // }
+
     if (lastDate && lastDate.getTime() === today.getTime()) {
-      return res.json({
-        message: "Already took a test today: No streak change",
-        currentStreak: user.currentStreak,
-        maxStreak: user.maxStreak,
-        totalPoints: user.totalPoints,
-        currentPeriodPoints: user.currentPeriodPoints,
-        daysUntilReset: 10 - (daysSinceReset % 10),
-      });
-    } else if (lastDate && lastDate.getTime() === yesterday.getTime()) {
-      // Increment streak
-      user.currentStreak = (user.currentStreak || 0) + 1;
-    } else {
-      // Missed a day or first test
-      user.currentStreak = 1;
-    }
+  // Already tested today → don't update streak OR lastTestDate
+  return res.json({
+    message: "Already took a test today: No streak change",
+    currentStreak: user.currentStreak,
+    maxStreak: user.maxStreak,
+    totalPoints: user.totalPoints,
+    currentPeriodPoints: user.currentPeriodPoints,
+    daysUntilReset: 10 - (daysSinceReset % 10),
+  });
+} else if (lastDate && lastDate.getTime() === yesterday.getTime()) {
+  // Increment streak
+  user.currentStreak = (user.currentStreak || 0) + 1;
+  user.lastTestDate = today;
+  user.totalTests = (user.totalTests || 0) + 1;
+} else {
+  // Missed a day or first test
+  user.currentStreak = 1;
+  user.lastTestDate = today;
+  user.totalTests = (user.totalTests || 0) + 1;
+}
 
     // Update max streak if needed
     if ((user.maxStreak || 0) < user.currentStreak) {

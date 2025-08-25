@@ -230,7 +230,8 @@ const TestPage = () => {
     if (loadingText) {
       return <span className="text-gray-400">Generating passage...</span>;
     }
-    return (targetText || "").split("").map((char, index) => {
+    const normalizedText = (targetText || "").replace(/\s+/g, " ");
+    return normalizedText.split("").map((char, index) => {
       let colorClass = "text-gray-600"; // Default color
 
       if (started && index < value.length) {
@@ -331,7 +332,6 @@ const TestPage = () => {
 
         {/*display text to practice */}
         <div className="border border-gray-200 p-4 sm:p-6 lg:p-8 rounded-lg bg-gray-50 w-full max-w-4xl">
-          
           <p
             className="text-2xl sm:text-3xl leading-relaxed select-none"
             style={{ userSelect: "none" }}
@@ -392,7 +392,13 @@ const TestPage = () => {
               )}
               {started && (
                 <div className="w-full sm:w-auto text-center bg-indigo-100 text-indigo-800 px-6 py-3 rounded-lg text-lg font-medium">
-                  Score: {calculateScore(calculateWPM(), calculateAccuracy(), customTime - timeLeft)} / 200
+                  Score:{" "}
+                  {calculateScore(
+                    calculateWPM(),
+                    calculateAccuracy(),
+                    customTime - timeLeft
+                  )}{" "}
+                  / 200
                 </div>
               )}
               {completed && (
